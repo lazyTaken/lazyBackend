@@ -24,4 +24,14 @@ public class UserController {
         List<User> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
+    @GetMapping("/user")
+    public ResponseEntity<Boolean> login(String phone, String password) throws  IOException {
+        User user = userService.findByPhone(phone, password);
+        if (user != null) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+    }
 }
