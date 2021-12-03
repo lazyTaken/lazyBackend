@@ -93,6 +93,16 @@ public class UserController {
 ////        userMapper.insert(u);
         return "success";
     }
+
+    @RequestMapping(value="/register",method= RequestMethod.GET)
+    public String Register(@RequestParam("id") int i,@RequestParam("name") String name,@RequestParam("password") String password) {
+        System.out.println("username is:"+password);
+        User user = userService3.Register(i,name,password);
+        List<User> userList= new ArrayList<User>();
+        userList.add(user);
+////        userMapper.insert(u);
+        return "success";
+    }
 //    @RequestMapping("/user")
 //    @GetMapping("/json")
 //    public List<User> addUser2(HttpServletRequest request) {

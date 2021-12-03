@@ -16,4 +16,6 @@ public interface UserService {
     User AlterPhoto(Integer i, String photo);
 
     User AlterPassword(Integer i, String password);
+
+    User Register(Integer i, String name, String password);
 }

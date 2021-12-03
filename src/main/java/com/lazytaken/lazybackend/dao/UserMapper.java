@@ -32,4 +32,19 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("update user set password=#{password} where id=#{id}")
     User AlterPassword(@Param("id") Integer i,@Param("password") String password);
+    
+    @Select("insert into user value(#{id},#{name},#{password},1,'null','null')")
+    User Register(@Param("id") Integer i, @Param("name") String name,@Param("password") String password);
 }
+
+
+
+
+
+
+
+
+
+
+
+
