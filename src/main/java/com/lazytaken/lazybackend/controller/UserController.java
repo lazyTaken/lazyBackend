@@ -83,6 +83,16 @@ public class UserController {
 ////        userMapper.insert(u);
         return "success";
     }
+
+    @RequestMapping(value="/alterpassword",method= RequestMethod.GET)
+    public String AlterPassword(@RequestParam("id") int i,@RequestParam("password") String password) {
+        System.out.println("username is:"+password);
+        User user = userService3.AlterPassword(i,password);
+        List<User> userList= new ArrayList<User>();
+        userList.add(user);
+////        userMapper.insert(u);
+        return "success";
+    }
 //    @RequestMapping("/user")
 //    @GetMapping("/json")
 //    public List<User> addUser2(HttpServletRequest request) {

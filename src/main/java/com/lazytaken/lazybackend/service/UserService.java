@@ -14,4 +14,6 @@ public interface UserService {
     User AlterPhone(Integer i,String phone);
 
     User AlterPhoto(Integer i, String photo);
+
+    User AlterPassword(Integer i, String password);
 }

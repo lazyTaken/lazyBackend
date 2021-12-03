@@ -49,5 +49,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.AlterPhoto(i,photo);
     }
 
+    @Override
+    public User AlterPassword(Integer i, String password) {
+        return userMapper.AlterPassword(i,password);
+    }
+
 
 }

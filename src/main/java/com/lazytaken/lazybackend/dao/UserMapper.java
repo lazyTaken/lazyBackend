@@ -29,4 +29,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("update user set photo=#{photo} where id=#{id}")
     User AlterPhoto(@Param("id") Integer i, @Param("photo") String photo);
+
+    @Select("update user set password=#{password} where id=#{id}")
+    User AlterPassword(@Param("id") Integer i,@Param("password") String password);
 }
