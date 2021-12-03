@@ -39,5 +39,15 @@ public class UserServiceImpl implements UserService {
         return userMapper.AlterName(id,name);
     }
 
+    @Override
+    public User AlterPhone(Integer i,String phone) {
+        return userMapper.AlterPhone(i,phone);
+    }
+
+    @Override
+    public User AlterPhoto(Integer i, String photo) {
+        return userMapper.AlterPhoto(i,photo);
+    }
+
 
 }

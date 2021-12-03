@@ -10,4 +10,8 @@ public interface UserService {
     User getWetherAccepct(Integer id);
 
     User AlterName(Integer id,String name);
+
+    User AlterPhone(Integer i,String phone);
+
+    User AlterPhoto(Integer i, String photo);
 }

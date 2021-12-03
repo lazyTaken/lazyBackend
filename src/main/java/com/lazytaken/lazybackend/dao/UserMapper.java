@@ -23,4 +23,10 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("update user set name=#{name} where id=#{id}")
 //    public User findByUser(@Param("id")int id);
     User AlterName(@Param("id") Integer id,@Param("name") String name);
+
+    @Select("update user set phone=#{phone} where id=#{id}")
+    User AlterPhone(@Param("id") Integer i,@Param("phone") String phone);
+
+    @Select("update user set photo=#{photo} where id=#{id}")
+    User AlterPhoto(@Param("id") Integer i, @Param("photo") String photo);
 }

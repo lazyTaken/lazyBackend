@@ -40,7 +40,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 //    @GetMapping("/user/{id}")
-    @RequestMapping(value="/user",method= RequestMethod.GET)
+    @RequestMapping(value="/user1",method= RequestMethod.GET)
     public String getWetherAccepct(@RequestParam("id") int i) {
         System.out.println("username is:"+i);
         User user = userService.getWetherAccepct(i);
@@ -49,16 +49,40 @@ public class UserController {
 ////        userMapper.insert(u);
         return user.getWetherAccept();
     }
+    @Autowired
+    private UserService userService1;
+    @RequestMapping(value="/user",method= RequestMethod.GET)
+    public String AlterName(@RequestParam("id") int id,@RequestParam("name") String i) {
+        System.out.println("username is:"+i);
+        User user = userService1.AlterName(id,i);
+        List<User> userList= new ArrayList<User>();
+        userList.add(user);
+////        userMapper.insert(u);
+        return "success";
+    }
 
-//    public String AlterName(@RequestParam("id") int id,@RequestParam("name") String i) {
-//        System.out.println("username is:"+i);
-//        User user = userService.AlterName(id,i);
-//        List<User> userList= new ArrayList<User>();
-//        userList.add(user);
-//////        userMapper.insert(u);
-//        return user.getName();
-//    }
-
+    @Autowired
+    private UserService userService2;
+    @RequestMapping(value="/user2",method= RequestMethod.GET)
+    public String AlterPhone(@RequestParam("id") int i,@RequestParam("phone") String phone) {
+        System.out.println("username is:"+phone);
+        User user = userService2.AlterPhone(i,phone);
+        List<User> userList= new ArrayList<User>();
+        userList.add(user);
+////        userMapper.insert(u);
+        return "success";
+    }
+    @Autowired
+    private UserService userService3;
+    @RequestMapping(value="/alterPhoto",method= RequestMethod.GET)
+    public String AlterPhoto(@RequestParam("id") int i,@RequestParam("photo") String photo) {
+        System.out.println("username is:"+photo);
+        User user = userService3.AlterPhoto(i,photo);
+        List<User> userList= new ArrayList<User>();
+        userList.add(user);
+////        userMapper.insert(u);
+        return "success";
+    }
 //    @RequestMapping("/user")
 //    @GetMapping("/json")
 //    public List<User> addUser2(HttpServletRequest request) {
