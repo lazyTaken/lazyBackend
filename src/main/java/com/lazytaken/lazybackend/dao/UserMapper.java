@@ -18,8 +18,9 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("select wether_accept from user where id=#{id}")
 //    public User findByUser(@Param("id")int id);
-    User getWetherAccepct(@Param("id") Integer id);  //
+    User getWetherAccepct(@Param("id") Integer id);
 
+//修改昵称
     @Select("update user set name=#{name} where id=#{id}")
 //    public User findByUser(@Param("id")int id);
     User AlterName(@Param("id") Integer id,@Param("name") String name);
@@ -32,9 +33,12 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("update user set password=#{password} where id=#{id}")
     User AlterPassword(@Param("id") Integer i,@Param("password") String password);
-    
-    @Select("insert into user value(#{id},#{name},#{password},1,'null','null')")
-    User Register(@Param("id") Integer i, @Param("name") String name,@Param("password") String password);
+
+    @Select("update user set wether_accept=1 where id=#{id}")
+    User Register(@Param("id") Integer i, @Param("true_name") String name,@Param("reason") String reason);
+
+    @Select("select name,photo,id,wether_accept from user where phone=#{phone}")
+    User SelectByPhone(@Param("phone") String phone);
 }
 
 

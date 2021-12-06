@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 //import javax.xml.ws.Response;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @MapperScan("com.baomidou.ant.sys.mapper")
@@ -37,72 +39,119 @@ public class UserController {
 //    }
 //
 
+//    判断是否为接单者
     @Autowired
     private UserService userService;
 //    @GetMapping("/user/{id}")
-    @RequestMapping(value="/user1",method= RequestMethod.GET)
-    public String getWetherAccepct(@RequestParam("id") int i) {
+    @RequestMapping(value="/ifAccept",method= RequestMethod.GET)
+    @GetMapping("/json")
+    public Map<String, Object> getWetherAccepct(@RequestParam("id") int i) {
         System.out.println("username is:"+i);
         User user = userService.getWetherAccepct(i);
         List<User> userList= new ArrayList<User>();
         userList.add(user);
+        Map<String, Object> map = new HashMap<>(3);
 ////        userMapper.insert(u);
-        return user.getWetherAccept();
+        map.put("wetherAccept",user.getWetherAccept());
+        map.put("staCode",1);
+        Map<String, Object> data = new HashMap<>(3);
+        data.put("data",map);
+        return map;
     }
+//  改昵称
     @Autowired
     private UserService userService1;
-    @RequestMapping(value="/user",method= RequestMethod.GET)
-    public String AlterName(@RequestParam("id") int id,@RequestParam("name") String i) {
-        System.out.println("username is:"+i);
+    @RequestMapping(value="/alterName",method= RequestMethod.GET)
+    public Map<String, Object> AlterName(@RequestParam("id") Integer id, @RequestParam("name") String i) {
+
         User user = userService1.AlterName(id,i);
         List<User> userList= new ArrayList<User>();
         userList.add(user);
-////        userMapper.insert(u);
-        return "success";
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("staCode",1);
+        map.put("success",1);
+        return map;
     }
 
+//    改绑定的手机号
     @Autowired
     private UserService userService2;
-    @RequestMapping(value="/user2",method= RequestMethod.GET)
-    public String AlterPhone(@RequestParam("id") int i,@RequestParam("phone") String phone) {
+    @RequestMapping(value="/alterPhone",method= RequestMethod.GET)
+    public Map<String, Object> AlterPhone(@RequestParam("id") int i, @RequestParam("phone") String phone) {
         System.out.println("username is:"+phone);
         User user = userService2.AlterPhone(i,phone);
         List<User> userList= new ArrayList<User>();
         userList.add(user);
-////        userMapper.insert(u);
-        return "success";
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("staCode",1);
+        map.put("success",1);
+        return map;
     }
-    @Autowired
-    private UserService userService3;
+
+//    改头像
+
     @RequestMapping(value="/alterPhoto",method= RequestMethod.GET)
-    public String AlterPhoto(@RequestParam("id") int i,@RequestParam("photo") String photo) {
+    public Map<String, Object> AlterPhoto(@RequestParam("id") int i, @RequestParam("photo") String photo) {
         System.out.println("username is:"+photo);
-        User user = userService3.AlterPhoto(i,photo);
+        User user = userService.AlterPhoto(i,photo);
         List<User> userList= new ArrayList<User>();
         userList.add(user);
 ////        userMapper.insert(u);
-        return "success";
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("staCode",1);
+        map.put("success",1);
+        return map;
     }
+//  通过手机号获取信息
+    @RequestMapping(value="/selectByPhone",method= RequestMethod.GET)
+    public Map<String, Object> SelectByPhone(@RequestParam("phone") String phone) {
+        System.out.println("username is:"+phone);
+        Map<String, Object> map = new HashMap<>(3);
+        User user = userService.SelectByPhone(phone);
+        if(user==null){
+            map.put("staCode",0);
+//            map.put("success",0);
+            return map;
+        }
+        List<User> userList= new ArrayList<User>();
+        userList.add(user);
+        map.put("id",user.getId());
+        map.put("name",user.getName());
+        map.put("photo",user.getPhoto());
+        map.put("wetherAccept",user.getWetherAccept());
+        map.put("staCode",1);
 
-    @RequestMapping(value="/alterpassword",method= RequestMethod.GET)
-    public String AlterPassword(@RequestParam("id") int i,@RequestParam("password") String password) {
+        return map;
+    }
+//修改用户密码
+    @RequestMapping(value="/alterPassword",method= RequestMethod.GET)
+    public Map<String, Object> AlterPassword(@RequestParam("id") int i, @RequestParam("password") String password) {
         System.out.println("username is:"+password);
-        User user = userService3.AlterPassword(i,password);
+        User user = userService.AlterPassword(i,password);
         List<User> userList= new ArrayList<User>();
         userList.add(user);
-////        userMapper.insert(u);
-        return "success";
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("staCode",1);
+        map.put("success",1);
+        return map;
     }
-
+//  注册接单者
     @RequestMapping(value="/register",method= RequestMethod.GET)
-    public String Register(@RequestParam("id") int i,@RequestParam("name") String name,@RequestParam("password") String password) {
-        System.out.println("username is:"+password);
-        User user = userService3.Register(i,name,password);
+    public Map<String, Object> Register(@RequestParam("id") int i, @RequestParam("true_name") String name, @RequestParam("reason") String reason) {
+        System.out.println("username is:"+reason);
+        User user = userService.Register(i,name,reason);
         List<User> userList= new ArrayList<User>();
         userList.add(user);
-////        userMapper.insert(u);
-        return "success";
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("staCode",1);
+        map.put("success",1);
+        return map;
     }
+////    订单存储到order表中
+//    @RequestMapping(value = "/saveAllOrder",method = RequestMethod.GET)
+//    public Map<String,Object> Register(@RequestParam())
+
+
 //    @RequestMapping("/user")
 //    @GetMapping("/json")
 //    public List<User> addUser2(HttpServletRequest request) {

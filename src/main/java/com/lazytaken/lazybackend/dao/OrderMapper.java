@@ -14,6 +14,7 @@ import java.util.List;
 @Repository
 @Mapper
 public interface OrderMapper extends BaseMapper<User> {
-    @Select("select * from `order` where id=#{id}")
-    Order getAllOrder(@Param("id") Integer id);
+
+    @Select("select * from `order` where assigner_id=#{assigner_id}")
+    List<Order> getAllOrder(@Param("assigner_id") Integer id);
 }

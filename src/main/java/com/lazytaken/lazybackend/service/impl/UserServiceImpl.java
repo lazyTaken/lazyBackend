@@ -59,5 +59,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.Register(i,name,password);
     }
 
+    @Override
+    public User SelectByPhone(String phone) {
+        return userMapper.SelectByPhone(phone);
+    }
+
 
 }

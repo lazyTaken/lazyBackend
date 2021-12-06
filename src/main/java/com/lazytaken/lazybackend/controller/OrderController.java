@@ -1,7 +1,5 @@
 package com.lazytaken.lazybackend.controller;
-import com.lazytaken.lazybackend.dao.UserMapper;
 import com.lazytaken.lazybackend.entity.Order;
-
 import com.lazytaken.lazybackend.service.OrderService;
 
 import org.mybatis.spring.annotation.MapperScan;
@@ -11,9 +9,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.lazytaken.lazybackend.dao.OrderMapper;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @RestController
 @MapperScan("com.baomidou.ant.sys.mapper")
 public class OrderController {
@@ -22,13 +23,18 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
     //    @GetMapping("/user/{id}")
-    @RequestMapping(value="/order",method= RequestMethod.GET)
-    public List<Order> getAllOrder(@RequestParam("id") int i) {
+    @RequestMapping(value="/getAllOrder",method= RequestMethod.GET)
+    public Map<String, Object> getAllOrder(@RequestParam("assigner_id") int i) {
         System.out.println("username is:"+i);
-        Order order = orderService.getAllOrder(i);
         List<Order> orderList= new ArrayList<Order>();
-        orderList.add(order);
-////        userMapper.insert(u);
-        return orderList;
+        orderList = orderService.getAllOrder(i);
+
+//        orderList.add(order);
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("order",orderList.toArray());
+
+        map.put("staCode",1);
+//        map.put("success",1);
+        return map;
     }
 }

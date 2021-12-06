@@ -18,4 +18,6 @@ public interface UserService {
     User AlterPassword(Integer i, String password);
 
     User Register(Integer i, String name, String password);
+
+    User SelectByPhone(String phone);
 }
