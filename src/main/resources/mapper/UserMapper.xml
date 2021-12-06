@@ -10,4 +10,17 @@
     <select id="findByPhone" resultType="User">
         select * from user where phone = #{phone} and password = #{password}
     </select>
+
+    <select id="findOnlyPhone" resultType="User">
+        select * from user where phone = #{phone}
+    </select>
+
+    <select id="findUserById" resultType="User">
+        select * from user where id = #{id}
+    </select>
+
+    <insert id="addUser">
+        insert into user(id, name, password, phone) values (#{id}, #{name}, #{password}, #{phone})
+    </insert>
+
 </mapper>

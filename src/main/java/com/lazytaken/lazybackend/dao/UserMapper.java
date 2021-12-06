@@ -11,4 +11,10 @@ public interface UserMapper {
     List<User> getAllUsers();
 
     User findByPhone(@Param("phone")String phone, @Param("password")String password);
+
+    User findOnlyPhone(String phone);
+
+    User findUserById(String id);
+
+    boolean addUser(User user);
 }

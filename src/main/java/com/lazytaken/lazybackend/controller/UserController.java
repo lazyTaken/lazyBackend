@@ -5,11 +5,8 @@ import com.lazytaken.lazybackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
 import java.io.IOException;
 import java.util.List;
 
@@ -33,5 +30,24 @@ public class UserController {
         } else {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping("/user")
+    public ResponseEntity<Boolean> simpleLogin(@RequestBody User user) throws IOException {
+        User res = userService.findOnlyPhone(user.getPhone());
+        if (res != null) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/newuser")
+    public ResponseEntity<Boolean> regieter(@RequestBody User user) throws IOException {
+        if (userService.findUserById(user.getId()) != null) {
+            return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
+        }
+        userService.addUser(user);
+        return new ResponseEntity<>(true, HttpStatus.CREATED);
     }
 }
