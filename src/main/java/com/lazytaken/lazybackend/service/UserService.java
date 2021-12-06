@@ -14,4 +14,6 @@ public interface UserService {
     User findUserById(String id);
 
     boolean addUser(User user);
+
+    int updatePassword(User user);
 }

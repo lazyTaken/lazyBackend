@@ -50,4 +50,12 @@ public class UserController {
         userService.addUser(user);
         return new ResponseEntity<>(true, HttpStatus.CREATED);
     }
+
+    @PostMapping("/password")
+    public ResponseEntity<Boolean> updatePassword(@RequestBody User user) throws IOException {
+        if(userService.updatePassword(user) == 1) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
+    }
 }

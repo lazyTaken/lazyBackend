@@ -23,4 +23,8 @@
         insert into user(id, name, password, phone) values (#{id}, #{name}, #{password}, #{phone})
     </insert>
 
+    <update id="updatePassword">
+        update user set password = #{password} where phone = #{phone}
+    </update>
+
 </mapper>
