@@ -1,16 +1,15 @@
 package com.lazytaken.lazybackend.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+
+import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("order")
 public class Order {
-    @TableId("id")
-    private int id;
+    private String id;
     private String fromWhere;
     private String toWhere;
     // 包裹类型
@@ -19,119 +18,28 @@ public class Order {
     private String code;
     // 订单状态
     private String status;
-    private String deadline;
     private String addition;
 
     private String assignerId;
     private String accepterId;
+    // 下单时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Timestamp orderTime;
     // 接单时间
-    private String orderTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Timestamp robTime;
+    // 取件时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Timestamp takenTime;
     // 送达时间
-    private String arriveTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Timestamp arriveTime;
     // 完成时间，确认付款
-    private String finishTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Timestamp finishTime;
+    //截止时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Timestamp deadline;
 
-    public int getId() {
-        return id;
-    }
-
-    public String getFromWhere() {
-        return fromWhere;
-    }
-
-    public String getToWhere() {
-        return toWhere;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getDeadline() {
-        return deadline;
-    }
-
-    public String getAddition() {
-        return addition;
-    }
-
-    public String getAssignerId() {
-        return assignerId;
-    }
-
-    public String getAccepterId() {
-        return accepterId;
-    }
-
-    public String getOrderTime() {
-        return orderTime;
-    }
-
-    public String getArriveTime() {
-        return arriveTime;
-    }
-
-    public String getFinishTime() {
-        return finishTime;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setFromWhere(String fromWhere) {
-        this.fromWhere = fromWhere;
-    }
-
-    public void setToWhere(String toWhere) {
-        this.toWhere = toWhere;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setDeadline(String deadline) {
-        this.deadline = deadline;
-    }
-
-    public void setAddition(String addition) {
-        this.addition = addition;
-    }
-
-    public void setAssignerId(String assignerId) {
-        this.assignerId = assignerId;
-    }
-
-    public void setAccepterId(String accepterId) {
-        this.accepterId = accepterId;
-    }
-
-    public void setOrderTime(String orderTime) {
-        this.orderTime = orderTime;
-    }
-
-    public void setArriveTime(String arriveTime) {
-        this.arriveTime = arriveTime;
-    }
-
-    public void setFinishTime(String finishTime) {
-        this.finishTime = finishTime;
-    }
+    private int version;
 }

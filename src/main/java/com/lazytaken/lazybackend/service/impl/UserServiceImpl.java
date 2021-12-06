@@ -11,12 +11,8 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    public void setUserMapper(UserMapper userMapper) {
-        this.userMapper = userMapper;
-    }
-
     @Autowired
-    public UserMapper userMapper;
+    private UserMapper userMapper;
 
     @Override
     public List<User> getAllUsers() {
@@ -24,19 +20,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getOnesMessageById(Integer id) {
-        return userMapper.getOnesMessageById(id);
+    public User findByPhone(String phone, String password) {
+        return userMapper.findByPhone(phone, password);
     }
 
     @Override
-    public User getWetherAccepct(Integer id) {
-        return userMapper.getWetherAccepct(id);
-
+    public User findOnlyPhone(String phone) {
+        return userMapper.findOnlyPhone(phone);
     }
 
     @Override
-    public User AlterName(Integer id,String name) {
-        return userMapper.AlterName(id,name);
+    public User findUserById(String id) {
+        return userMapper.findUserById(id);
+    }
+
+    @Override
+    public boolean addUser(User user) {
+        return userMapper.addUser(user);
+    }
+
+    @Override
+    public int updatePassword(User user) {
+        return userMapper.updatePassword(user);
     }
 
 
