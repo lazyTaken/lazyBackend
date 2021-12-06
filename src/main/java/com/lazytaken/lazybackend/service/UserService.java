@@ -7,6 +7,17 @@ import java.util.List;
 public interface UserService {
     public List<User> getAllUsers();
 
+    User AlterName(Integer id,String name);
+
+    User AlterPhone(Integer i,String phone);
+
+    User AlterPhoto(Integer i, String photo);
+
+
+    User Register(Integer i, String name, String password);
+
+    User SelectByPhone(String phone);
+    
     User findByPhone(String phone, String password);
 
     User findOnlyPhone(String phone);

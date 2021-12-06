@@ -44,5 +44,30 @@ public class UserServiceImpl implements UserService {
         return userMapper.updatePassword(user);
     }
 
+    @Override
+    public User AlterPhone(Integer i,String phone) {
+        return userMapper.AlterPhone(i,phone);
+    }
+
+    @Override
+    public User AlterPhoto(Integer i, String photo) {
+        return userMapper.AlterPhoto(i,photo);
+    }
+
+    @Override
+    public User AlterPassword(Integer i, String password) {
+        return userMapper.AlterPassword(i,password);
+    }
+
+    @Override
+    public User Register(Integer i, String name, String password) {
+        return userMapper.Register(i,name,password);
+    }
+
+    @Override
+    public User SelectByPhone(String phone) {
+        return userMapper.SelectByPhone(phone);
+    }
+
 
 }

@@ -10,6 +10,7 @@ import com.lazytaken.lazybackend.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 
 @Service
@@ -24,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public Order getAllOrder(Integer id) {
+    public List<Order> getAllOrder(Integer id) {
         return orderMapper.getAllOrder(id);
 
     }
