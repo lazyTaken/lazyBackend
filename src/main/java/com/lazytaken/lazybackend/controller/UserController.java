@@ -36,7 +36,18 @@ public class UserController {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
     }
+
+    @PostMapping("/user")
+    public ResponseEntity<Boolean> simpleLogin(@RequestBody User user) throws IOException {
+        User res = userService.findOnlyPhone(user.getPhone());
+        if (res != null) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+    }
 //    判断是否为接单者
+//    @GetMapping("/user/{id}")
     @RequestMapping(value="/ifAccept",method= RequestMethod.GET)
     @GetMapping("/json")
     public Map<String, Object> getWetherAccepct(@RequestParam("id") String i) {
@@ -52,23 +63,14 @@ public class UserController {
         data.put("data",map);
         return map;
     }
-
-    @PostMapping("/user")
-    public ResponseEntity<Boolean> simpleLogin(@RequestBody User user) throws IOException {
-        User res = userService.findOnlyPhone(user.getPhone());
-        if (res != null) {
-            return new ResponseEntity<>(true, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
-        }
-    }
-
-//      改昵称
+//  改昵称
+    @Autowired
+    private UserService userService1;
     @RequestMapping(value="/alterName",method= RequestMethod.GET)
-    public Map<String, Object> AlterName(@RequestParam("id") String id, @RequestParam("name") String i) {
-        User user = userService.AlterName(id,i);
-//        List<User> userList= new ArrayList<User>();
-//        userList.add(user);
+    public Map<String, Object> AlterName(@RequestParam("id") Integer id, @RequestParam("name") String i) {
+        User user = userService1.AlterName(id,i);
+        List<User> userList= new ArrayList<User>();
+        userList.add(user);
         Map<String, Object> map = new HashMap<>(3);
         map.put("staCode",1);
         map.put("success",1);

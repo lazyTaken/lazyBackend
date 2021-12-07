@@ -1,8 +1,6 @@
 package com.lazytaken.lazybackend.dao;
 
 import java.util.List;
-
-
 import com.lazytaken.lazybackend.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
