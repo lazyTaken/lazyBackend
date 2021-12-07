@@ -20,6 +20,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User AlterName(String id, String name) {
+        return userMapper.AlterName(id,name);
+    }
+
+    @Override
     public User findByPhone(String phone, String password) {
         return userMapper.findByPhone(phone, password);
     }
@@ -45,22 +50,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User AlterPhone(Integer i,String phone) {
+    public User getWetherAccepct(String i) {
+        return userMapper.getWetherAccepct(i);
+    }
+
+    @Override
+    public User AlterPhone(String i,String phone) {
         return userMapper.AlterPhone(i,phone);
     }
 
     @Override
-    public User AlterPhoto(Integer i, String photo) {
+    public User AlterPhoto(String i, String photo) {
         return userMapper.AlterPhoto(i,photo);
     }
 
-    @Override
-    public User AlterPassword(Integer i, String password) {
-        return userMapper.AlterPassword(i,password);
-    }
+//    @Override
+//    public User AlterPassword(Integer i, String password) {
+//        return userMapper.AlterPassword(i,password);
+//    }
 
     @Override
-    public User Register(Integer i, String name, String password) {
+    public User Register(String i, String name, String password) {
         return userMapper.Register(i,name,password);
     }
 

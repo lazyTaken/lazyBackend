@@ -2,6 +2,7 @@ package com.lazytaken.lazybackend.controller;
 
 import com.lazytaken.lazybackend.entity.User;
 import com.lazytaken.lazybackend.service.UserService;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
+//@MapperScan("com.baomidou.ant.sys.mapper")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -33,13 +35,11 @@ public class UserController {
         } else {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
+    }
 //    判断是否为接单者
-    @Autowired
-    private UserService userService;
-//    @GetMapping("/user/{id}")
     @RequestMapping(value="/ifAccept",method= RequestMethod.GET)
     @GetMapping("/json")
-    public Map<String, Object> getWetherAccepct(@RequestParam("id") int i) {
+    public Map<String, Object> getWetherAccepct(@RequestParam("id") String i) {
         System.out.println("username is:"+i);
         User user = userService.getWetherAccepct(i);
         List<User> userList= new ArrayList<User>();
@@ -52,11 +52,6 @@ public class UserController {
         data.put("data",map);
         return map;
     }
-//  改昵称
-    @Autowired
-    private UserService userService1;
-    @RequestMapping(value="/alterName",method= RequestMethod.GET)
-    public Map<String, Object> AlterName(@RequestParam("id") Integer id, @RequestParam("name") String i) {
 
     @PostMapping("/user")
     public ResponseEntity<Boolean> simpleLogin(@RequestBody User user) throws IOException {
@@ -67,9 +62,13 @@ public class UserController {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
     }
-        User user = userService1.AlterName(id,i);
-        List<User> userList= new ArrayList<User>();
-        userList.add(user);
+
+//      改昵称
+    @RequestMapping(value="/alterName",method= RequestMethod.GET)
+    public Map<String, Object> AlterName(@RequestParam("id") String id, @RequestParam("name") String i) {
+        User user = userService.AlterName(id,i);
+//        List<User> userList= new ArrayList<User>();
+//        userList.add(user);
         Map<String, Object> map = new HashMap<>(3);
         map.put("staCode",1);
         map.put("success",1);
@@ -84,15 +83,15 @@ public class UserController {
         userService.addUser(user);
         return new ResponseEntity<>(true, HttpStatus.CREATED);
     }
+
 //    改绑定的手机号
-    @Autowired
-    private UserService userService2;
+
     @RequestMapping(value="/alterPhone",method= RequestMethod.GET)
-    public Map<String, Object> AlterPhone(@RequestParam("id") int i, @RequestParam("phone") String phone) {
+    public Map<String, Object> AlterPhone(@RequestParam("id") String i, @RequestParam("phone") String phone) {
         System.out.println("username is:"+phone);
-        User user = userService2.AlterPhone(i,phone);
-        List<User> userList= new ArrayList<User>();
-        userList.add(user);
+        User user = userService.AlterPhone(i,phone);
+//        List<User> userList= new ArrayList<User>();
+//        userList.add(user);
         Map<String, Object> map = new HashMap<>(3);
         map.put("staCode",1);
         map.put("success",1);
@@ -102,11 +101,11 @@ public class UserController {
 //    改头像
 
     @RequestMapping(value="/alterPhoto",method= RequestMethod.GET)
-    public Map<String, Object> AlterPhoto(@RequestParam("id") int i, @RequestParam("photo") String photo) {
+    public Map<String, Object> AlterPhoto(@RequestParam("id") String i, @RequestParam("photo") String photo) {
         System.out.println("username is:"+photo);
         User user = userService.AlterPhoto(i,photo);
-        List<User> userList= new ArrayList<User>();
-        userList.add(user);
+//        List<User> userList= new ArrayList<User>();
+//        userList.add(user);
 ////        userMapper.insert(u);
         Map<String, Object> map = new HashMap<>(3);
         map.put("staCode",1);
@@ -131,12 +130,12 @@ public class UserController {
         map.put("photo",user.getPhoto());
         map.put("wetherAccept",user.getWetherAccept());
         map.put("staCode",1);
-
         return map;
     }
+
 //  注册接单者
     @RequestMapping(value="/register",method= RequestMethod.GET)
-    public Map<String, Object> Register(@RequestParam("id") int i, @RequestParam("true_name") String name, @RequestParam("reason") String reason) {
+    public Map<String, Object> Register(@RequestParam("id") String i, @RequestParam("true_name") String name, @RequestParam("reason") String reason) {
         System.out.println("username is:"+reason);
         User user = userService.Register(i,name,reason);
         List<User> userList= new ArrayList<User>();
