@@ -28,5 +28,5 @@ public interface UserService {
 
     int updatePassword(User user);
 
-    User getWetherAccepct(int i);
+    User getWetherAccepct(String i);
 }

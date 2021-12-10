@@ -67,7 +67,7 @@ public class UserController {
     @Autowired
     private UserService userService1;
     @RequestMapping(value="/alterName",method= RequestMethod.GET)
-    public Map<String, Object> AlterName(@RequestParam("id") Integer id, @RequestParam("name") String i) {
+    public Map<String, Object> AlterName(@RequestParam("id") String id, @RequestParam("name") String i) {
         User user = userService1.AlterName(id,i);
         List<User> userList= new ArrayList<User>();
         userList.add(user);

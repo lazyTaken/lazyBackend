@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User AlterName(Integer id, String name) {
-        return null;
+    public User AlterName(String id, String name) {
+        return userMapper.AlterName(id, name);
     }
 
     @Override
@@ -50,19 +50,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getWetherAccepct(int i) {
-        return null;
-    }
-
-    @Override
-    public User AlterPhone(Integer i,String phone) {
-        return userMapper.AlterPhone(i,phone);
+    public User getWetherAccepct(String i) {
+        return userMapper.getWetherAccepct(i);
     }
 
     @Override
     public User AlterPhone(String i,String phone) {
         return userMapper.AlterPhone(i,phone);
     }
+
 
     @Override
     public User AlterPhoto(String i, String photo) {
