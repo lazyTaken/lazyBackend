@@ -7,4 +7,11 @@ import java.util.List;
 public interface OrderService {
     List<Order> getAllOrder(Integer i);
 
+    List<Order> getAllUnhandleOrder();
+
+    List<Order> getAllUnTakenOrder(String phone);
+
+    List<Order> getAllUnArrivedOrder(String phone);
+
+    boolean grabOrder(String phone, String id);
 }

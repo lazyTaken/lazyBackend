@@ -1,5 +1,6 @@
 package com.lazytaken.lazybackend.entity;
 
+import com.baomidou.mybatisplus.annotation.Version;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
@@ -41,5 +42,6 @@ public class Order {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp deadline;
 
+    @Version
     private int version;
 }
