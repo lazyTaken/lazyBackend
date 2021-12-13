@@ -65,4 +65,33 @@ public class OrderController {
             return new ResponseEntity<>(res, HttpStatus.FORBIDDEN);
         }
     }
+
+    // 取件
+    @GetMapping("/order/pickup")
+    public ResponseEntity<Boolean> pickUp(String id) throws IOException {
+        boolean res = orderService.pickUp(id);
+        if(res) {
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(res, HttpStatus.FORBIDDEN);
+        }
+    }
+
+    // 送达
+    @GetMapping("/order/arrive")
+    public ResponseEntity<Boolean> arrive(String id) throws IOException {
+        boolean res = orderService.arrive(id);
+        if(res) {
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(res, HttpStatus.FORBIDDEN);
+        }
+    }
+
+    // 获取发单，接单人信息
+    @GetMapping("/order/peopleInfo")
+    public ResponseEntity<Object> getPeopleInfo(String id) throws IOException {
+        Map<String, String> res = orderService.getPeopleInfo(id);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
  }

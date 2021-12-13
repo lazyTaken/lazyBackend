@@ -21,4 +21,12 @@
     <update id="grabOrder">
         update `order` set status = "1", rob_time = now(), accepter_id = (select id from user where phone = #{phone}) where id = #{id}
     </update>
+
+    <update id="updateOrderTaken">
+        update `order` set status = #{status}, taken_time = now() where id = #{id}
+    </update>
+
+    <update id="updateOrderArrived">
+        update `order` set status = #{status}, arrive_time = now() where id = #{id}
+    </update>
 </mapper>

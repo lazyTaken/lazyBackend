@@ -41,6 +41,8 @@ public interface UserMapper {
 
     @Select("select name,photo,id,wether_accept from user where phone=#{phone}")
     User SelectByPhone(@Param("phone") String phone);
+
+    User getUserById(String assignerId);
 }
 
 

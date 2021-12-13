@@ -155,4 +155,10 @@ public class UserController {
         }
         return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
     }
+
+    @GetMapping("/payments")
+    public ResponseEntity<Object> getPayments(String phone) throws IOException {
+        Map<String, String> payments = userService.getPayments(phone);
+        return new ResponseEntity<>(payments, HttpStatus.OK);
+    }
 }

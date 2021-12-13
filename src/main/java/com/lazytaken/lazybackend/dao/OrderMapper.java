@@ -27,4 +27,8 @@ public interface OrderMapper extends BaseMapper<User> {
     Order getOrderById(String id);
 
     int grabOrder(String phone, String id);
+
+    int updateOrderTaken(Order order);
+
+    int updateOrderArrived(Order order);
 }

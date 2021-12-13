@@ -6,7 +6,11 @@ import com.lazytaken.lazybackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -55,6 +59,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Map<String, String> getPayments(String phone) {
+        User user = userMapper.findOnlyPhone(phone);
+        Map<String, String> res = new HashMap<>();
+        res.put("支付宝", user.getAlipay());
+        res.put("微信", user.getWeixin());
+        return res;
+    }
+
+    @Override
     public User AlterPhone(String i,String phone) {
         return userMapper.AlterPhone(i,phone);
     }
@@ -79,6 +92,5 @@ public class UserServiceImpl implements UserService {
     public User SelectByPhone(String phone) {
         return userMapper.SelectByPhone(phone);
     }
-
 
 }
