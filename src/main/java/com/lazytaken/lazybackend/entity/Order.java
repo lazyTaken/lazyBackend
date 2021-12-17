@@ -1,5 +1,9 @@
 package com.lazytaken.lazybackend.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.Version;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
@@ -8,7 +12,9 @@ import java.sql.Timestamp;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("`order`")
 public class Order {
+    @TableId(type = IdType.AUTO)
     private String id;
     private String fromWhere;
     private String toWhere;
@@ -40,6 +46,6 @@ public class Order {
     //截止时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp deadline;
-
+    @Version
     private int version;
 }

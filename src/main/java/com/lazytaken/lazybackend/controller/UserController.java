@@ -98,12 +98,12 @@ public class UserController {
         return map;
     }
 
-//    改头像
+//修改微信账号
 
-    @RequestMapping(value="/alterPhoto",method= RequestMethod.GET)
-    public Map<String, Object> AlterPhoto(@RequestParam("id") String i, @RequestParam("photo") String photo) {
-        System.out.println("username is:"+photo);
-        User user = userService.AlterPhoto(i,photo);
+    @RequestMapping(value="/alterWeixin",method= RequestMethod.GET)
+    public Map<String, Object> AlterWeixin(@RequestParam("phone") String phone, @RequestParam("weixin") String weixin) {
+        System.out.println("username is:"+weixin);
+        User user = userService.AlterWeixin(phone,weixin);
 //        List<User> userList= new ArrayList<User>();
 //        userList.add(user);
 ////        userMapper.insert(u);
@@ -112,6 +112,16 @@ public class UserController {
         map.put("success",1);
         return map;
     }
+//修改支付宝账号
+    @RequestMapping(value="/alterAlipay",method= RequestMethod.GET)
+    public Map<String, Object> AlterAlipay(@RequestParam("phone") String phone, @RequestParam("alipay") String alipay) {
+        User user = userService.AlterAlipay(phone,alipay);
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("staCode",1);
+        map.put("success",1);
+        return map;
+    }
+
 //  通过手机号获取信息
     @RequestMapping(value="/selectByPhone",method= RequestMethod.GET)
     public Map<String, Object> SelectByPhone(@RequestParam("phone") String phone) {
@@ -120,14 +130,14 @@ public class UserController {
         User user = userService.SelectByPhone(phone);
         if(user==null){
             map.put("staCode",0);
-//            map.put("success",0);
             return map;
         }
         List<User> userList= new ArrayList<User>();
         userList.add(user);
         map.put("id",user.getId());
         map.put("name",user.getName());
-        map.put("photo",user.getPhoto());
+        map.put("alipay",user.getAlipay());
+        map.put("weixin",user.getWeixin());
         map.put("wetherAccept",user.getWetherAccept());
         map.put("staCode",1);
         return map;
@@ -145,12 +155,69 @@ public class UserController {
         map.put("success",1);
         return map;
     }
-
+//修改密码
     @PostMapping("/password")
     public ResponseEntity<Boolean> updatePassword(@RequestBody User user) throws IOException {
         if(userService.updatePassword(user) == 1) {
             return new ResponseEntity<>(true, HttpStatus.OK);
         }
         return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
+    }
+//后端存头像
+@Autowired
+private UserMapper userMapper;
+@RequestMapping(value="/file",method= RequestMethod.POST)
+public Map<String, Object> ImgStr(@RequestParam("file") MultipartFile file, @RequestParam("phone") String phone)throws IOException {
+//    User user = new User();
+//    System.out.println("+++++++++++"+phone);
+    User user = userMapper.selectById(phone);
+    Map<String, Object> map1 = new HashMap<>(3);
+    map1.put("staCode",0);
+    if (file.equals("")){return map1;}
+    String casePath = "C:\\Users\\lenovo\\Desktop\\小懒代取\\lazyBackend-main\\lazyBackend-main\\image\\"+phone;
+    String imgFormat = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+    File f = new File(casePath);
+    try {if (!f.exists()){f.mkdirs();}
+    }catch (Exception e){ }
+    String name= phone+imgFormat;
+    String urlImg =casePath+"/"+name;
+    System.out.println("+++++++++++"+user.getPhoto()+user.getPhone());
+    UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+    updateWrapper.eq("phone",user.getPhone());
+    User user1 = new User();
+    user1.setPhoto(urlImg);
+    userMapper.update(user1, updateWrapper);
+    Map<String, Object> map = new HashMap<>(3);
+    map.put("staCode",1);
+    map.put("success",1);
+    return map;
+}
+
+//传图片去前端
+    @RequestMapping(value = "/getImageToFront", produces = MediaType.IMAGE_PNG_VALUE,method= RequestMethod.GET)
+    public ResponseEntity<byte[]> getImage(@RequestParam("phone") String phone) throws Exception{
+        byte[] imageContent ;
+        User user = userService.SelectByPhone(phone);
+        String path = user.getPhoto();
+        imageContent = fileToByte(new File(path));
+        System.out.println(path);
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        return new ResponseEntity<>(imageContent, headers, HttpStatus.OK);
+    }
+    public static byte[] fileToByte(File img) throws Exception {
+        byte[] bytes = null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            BufferedImage bi;
+            bi = ImageIO.read(img);
+            ImageIO.write(bi, "png", baos);
+            bytes = baos.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            baos.close();
+        }
+        return bytes;
     }
 }
