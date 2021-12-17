@@ -15,7 +15,7 @@ public interface OrderMapper extends BaseMapper<Order> {
     @Select("select * from `order` where assigner_id=#{assigner_id}")
     List<Order> getAllOrder(@Param("assigner_id") String id);
     @Update("update `order` set assigner_id=#{assigner_id} where id=#{id}")
-    Order AlterAccepterID(@Param("assigner_id") String i,@Param("id") Integer id);
+    Order AlterAccepterID(@Param("assigner_id") String i,@Param("id") String id);
     List<Order> getAllUnhandleOrder();
 
     List<Order> getAllOrder(@Param("assigner_id") Integer id);

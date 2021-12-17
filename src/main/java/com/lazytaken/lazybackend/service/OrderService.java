@@ -21,4 +21,6 @@ public interface OrderService {
     boolean arrive(String id);
 
     Map<String, String> getPeopleInfo(String id);
+
+    Order AlterAccepterID(String i, String id);
 }

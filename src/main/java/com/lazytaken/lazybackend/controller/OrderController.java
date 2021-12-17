@@ -3,13 +3,14 @@ import com.lazytaken.lazybackend.entity.Order;
 import com.lazytaken.lazybackend.service.OrderService;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import com.lazytaken.lazybackend.dao.OrderMapper;
-import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public class OrderController {
         return map;
     }
     @RequestMapping(value="/alterAssignerID",method= RequestMethod.GET)
-    public Map<String, Object> AlterAccepterID(@RequestParam("assigner_id") String i,@RequestParam("id") Integer id) {
+    public Map<String, Object> AlterAccepterID(@RequestParam("assigner_id") String i,@RequestParam("id") String id) {
         System.out.println("username is:"+i);
         Order order = orderService.AlterAccepterID(i,id);
         Map<String, Object> map = new HashMap<>(3);
@@ -49,23 +50,24 @@ public class OrderController {
     @Autowired
     private OrderService service;
     @RequestMapping(value="/lock",method= RequestMethod.GET)
-    public void lock(@RequestParam("id") String id){
+    public void lock(@RequestParam("id") String id) {
         Order byId = orderMapper.selectById(id);
         Order order = new Order();
         order.setId(id);
-        int i ;
-        for (i=0;i<50;i++) {
-        order.setFromWhere(byId.getFromWhere()+1);
-        order.setVersion(byId.getVersion());
-        int b = orderMapper.updateById(order);
+        int i;
+        for (i = 0; i < 50; i++) {
+            order.setFromWhere(byId.getFromWhere() + 1);
+            order.setVersion(byId.getVersion());
+            int b = orderMapper.updateById(order);
         }
+    }
 //获得订单
     @PostMapping("getOrder")
     public String getList(@RequestBody Order order){
         orderMapper.insert(order);
         return "success";
     }
-}
+
 
     // 返回所有未接订单
     @GetMapping("/order/unHandleOrders")

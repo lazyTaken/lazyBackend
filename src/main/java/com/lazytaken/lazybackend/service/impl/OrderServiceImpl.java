@@ -111,5 +111,10 @@ public class OrderServiceImpl implements OrderService {
         return res;
     }
 
+    @Override
+    public Order AlterAccepterID(String i, String id) {
+        return orderMapper.AlterAccepterID(i,id);
+    }
+
 
 }
