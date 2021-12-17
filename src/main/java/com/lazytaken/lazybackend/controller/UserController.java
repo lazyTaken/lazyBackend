@@ -1,13 +1,22 @@
 package com.lazytaken.lazybackend.controller;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.lazytaken.lazybackend.dao.UserMapper;
 import com.lazytaken.lazybackend.entity.User;
 import com.lazytaken.lazybackend.service.UserService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +45,18 @@ public class UserController {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
     }
+
+    @PostMapping("/user")
+    public ResponseEntity<Boolean> simpleLogin(@RequestBody User user) throws IOException {
+        User res = userService.findOnlyPhone(user.getPhone());
+        if (res != null) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+    }
 //    判断是否为接单者
+//    @GetMapping("/user/{id}")
     @RequestMapping(value="/ifAccept",method= RequestMethod.GET)
     @GetMapping("/json")
     public Map<String, Object> getWetherAccepct(@RequestParam("id") String i) {
@@ -52,23 +72,14 @@ public class UserController {
         data.put("data",map);
         return map;
     }
-
-    @PostMapping("/user")
-    public ResponseEntity<Boolean> simpleLogin(@RequestBody User user) throws IOException {
-        User res = userService.findOnlyPhone(user.getPhone());
-        if (res != null) {
-            return new ResponseEntity<>(true, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
-        }
-    }
-
-//      改昵称
+//  改昵称
+    @Autowired
+    private UserService userService1;
     @RequestMapping(value="/alterName",method= RequestMethod.GET)
     public Map<String, Object> AlterName(@RequestParam("id") String id, @RequestParam("name") String i) {
-        User user = userService.AlterName(id,i);
-//        List<User> userList= new ArrayList<User>();
-//        userList.add(user);
+        User user = userService1.AlterName(id,i);
+        List<User> userList= new ArrayList<User>();
+        userList.add(user);
         Map<String, Object> map = new HashMap<>(3);
         map.put("staCode",1);
         map.put("success",1);
@@ -168,8 +179,6 @@ public class UserController {
 private UserMapper userMapper;
 @RequestMapping(value="/file",method= RequestMethod.POST)
 public Map<String, Object> ImgStr(@RequestParam("file") MultipartFile file, @RequestParam("phone") String phone)throws IOException {
-//    User user = new User();
-//    System.out.println("+++++++++++"+phone);
     User user = userMapper.selectById(phone);
     Map<String, Object> map1 = new HashMap<>(3);
     map1.put("staCode",0);

@@ -1,8 +1,8 @@
 package com.lazytaken.lazybackend.dao;
 import java.util.List;
-
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lazytaken.lazybackend.entity.Order;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
 import com.lazytaken.lazybackend.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -45,6 +45,8 @@ public interface UserMapper  extends BaseMapper<User> {
 
     @Select("select name,id,wether_accept,weixin,alipay from user where phone=#{phone}")
     User SelectByPhone(@Param("phone") String phone);
+
+    User getUserById(String assignerId);
 }
 
 

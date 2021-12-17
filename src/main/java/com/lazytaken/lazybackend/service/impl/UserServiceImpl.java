@@ -6,7 +6,11 @@ import com.lazytaken.lazybackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User AlterName(String id, String name) {
-        return userMapper.AlterName(id,name);
+        return userMapper.AlterName(id, name);
     }
 
     @Override
@@ -55,14 +59,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Map<String, String> getPayments(String phone) {
+        User user = userMapper.findOnlyPhone(phone);
+        Map<String, String> res = new HashMap<>();
+        res.put("支付宝", user.getAlipay());
+        res.put("微信", user.getWeixin());
+        return res;
+    }
+
+    @Override
+    public User AlterWeixin(String phone, String weixin) {
+        return userMapper.AlterWeixin(phone,weixin);
+    }
+
+    @Override
+    public User AlterAlipay(String phone, String alipay) {
+        return userMapper.AlterAlipay(phone,alipay);
+    }
+
+    @Override
     public User AlterPhone(String i,String phone) {
         return userMapper.AlterPhone(i,phone);
     }
 
-    @Override
-    public User AlterPhoto(String i, String photo) {
-        return userMapper.AlterPhoto(i,photo);
-    }
+
+//    @Override
+//    public User AlterPhoto(String i, String photo) {
+//        return userMapper.AlterPhoto(i,photo);
+//    }
 
 //    @Override
 //    public User AlterPassword(Integer i, String password) {
@@ -78,6 +102,5 @@ public class UserServiceImpl implements UserService {
     public User SelectByPhone(String phone) {
         return userMapper.SelectByPhone(phone);
     }
-
 
 }

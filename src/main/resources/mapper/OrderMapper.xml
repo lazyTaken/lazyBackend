@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lazytaken.lazybackend.dao.OrderMapper">
+    <select id="getAllUnhandleOrder" resultType="Order">
+        select * from `order` where rob_time is null
+    </select>
+
+    <select id="getAllUnTakenOrder" resultType="Order">
+        select * from `order` where accepter_id = (select id from user where phone = #{phone}) and rob_time is not null and taken_time is null
+    </select>
+
+    <select id="getAllUnArrivedOrder" resultType="Order">
+        select * from `order` where accepter_id = (select id from user where phone = #{phone}) and taken_time is not null and arrive_time is null
+    </select>
+    
+    <select id="getOrderById" resultType="Order">
+        select * from `order` where id = #{id} for update
+    </select>
+
+    <update id="grabOrder">
+        update `order` set status = "1", rob_time = now(), accepter_id = (select id from user where phone = #{phone}) where id = #{id}
+    </update>
+
+    <update id="updateOrderTaken">
+        update `order` set status = #{status}, taken_time = now() where id = #{id}
+    </update>
+
+    <update id="updateOrderArrived">
+        update `order` set status = #{status}, arrive_time = now() where id = #{id}
+    </update>
+</mapper>

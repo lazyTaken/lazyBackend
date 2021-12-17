@@ -16,4 +16,13 @@ public interface OrderMapper extends BaseMapper<Order> {
     List<Order> getAllOrder(@Param("assigner_id") String id);
     @Update("update `order` set assigner_id=#{assigner_id} where id=#{id}")
     Order AlterAccepterID(@Param("assigner_id") String i,@Param("id") Integer id);
+    List<Order> getAllUnhandleOrder();
+
+    List<Order> getAllOrder(@Param("assigner_id") Integer id);
+    int updateOrderArrived(Order order);
+    int updateOrderTaken(Order order);
+    Order getOrderById(String id);
+    int grabOrder(String phone, String id);
+    List<Order> getAllUnArrivedOrder(String phone);
+    List<Order> getAllUnTakenOrder(String phone);
 }
